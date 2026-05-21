@@ -1,42 +1,30 @@
-const blogs = [
-  {
-    id: 1,
-    title: "Understanding JavaScript Closures",
-    author: "Ahmed Lawal",
-    url: "https://example.com/js-closures",
-    likes: 120,
-  },
-  {
-    id: 2,
-    title: "A Guide to Modern CSS Layouts",
-    author: "Fatima Bello",
-    url: "https://example.com/css-layouts",
-    likes: 95,
-  },
-  {
-    id: 3,
-    title: "Getting Started with Node.js",
-    author: "Ibrahim Aminu",
-    url: "https://example.com/nodejs-guide",
-    likes: 150,
-  },
-];
+import { blogs } from "../db/schema";
+import { db } from "../db";
+import { eq } from "drizzle-orm";
 
-export const getBlogs = () => {
-  return blogs;
+export const getBlogs = async () => {
+  return db.query.blogs.findMany();
 };
 
-export const addBlog = (title: string, author: string, url: string) => {
-  let lastId = blogs[blogs.length - 1].id;
-  const id: number = ++lastId;
-  blogs.push({ id, author, url, title, likes: 0 });
+export const addBlog = async (title: string, author: string, url: string) => {
+  await db.insert(blogs).values({ title, author, url });
 };
 
-export const getBlogById = (id: number) => {
-  return blogs.find((blog) => blog.id === id);
+export const getBlogById = async (id: number) => {
+  return db.query.blogs.findFirst({
+    where: eq(blogs.id, id),
+  });
 };
 
-export const addLikes = (id: number) => {
-  const blog = blogs.find((blog) => blog.id === id);
-  if (blog) ++blog.likes;
+export const addLikes = async (id: number) => {
+  const blog = await getBlogById(id);
+  if (blog) {
+    const likes = blog.likes ? ++blog.likes : 1;
+    await db
+      .update(blogs)
+      .set({
+        likes: likes,
+      })
+      .where(eq(blogs.id, id));
+  }
 };
