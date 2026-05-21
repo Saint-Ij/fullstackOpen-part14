@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1779348216971,
-      "tag": "0000_curvy_proteus",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1779349584040,
-      "tag": "0001_slow_serpent_society",
+      "when": 1779359822836,
+      "tag": "0000_romantic_madame_masque",
       "breakpoints": true
     }
   ]
