@@ -1,34 +1,41 @@
-const notes = [
-  {
-    id: 1,
-    content: "next.js utilizes React Server Components",
-    important: true,
-  },
-  { id: 2, content: "next.js is built on top of React", important: true },
-  {
-    id: 3,
-    content: "next.js supports both static and dynamic rendering",
-    important: false,
-  },
-];
+import { eq } from "drizzle-orm";
+import { db } from "@/db";
+import { not } from "drizzle-orm";
+import { sql } from "drizzle-orm";
+import { notes } from "@/db/schema";
 
-let nextId = 4;
-
-export const getNotes = () => {
-  return notes;
+export const getNotes = async (importantOnly: boolean) => {
+  if (importantOnly) {
+    return db.query.notes.findMany({
+      where: eq(notes.important, true),
+    });
+  }
+  return db.query.notes.findMany();
 };
 
-export const addNote = (content: string, important: boolean) => {
-  notes.push({ id: nextId++, content, important });
+export const getNoteById = async (id: number) => {
+  return db.query.notes.findFirst({
+    where: eq(notes.id, id),
+  });
 };
 
-export const getNoteById = (id: number) => {
-  return notes.find((note) => note.id === id);
+export const addNote = async (
+  content: string,
+  important: boolean,
+) => {
+  const user = await db.query.users.findFirst({
+    orderBy: sql`RANDOM()`,
+  });
+
+  await db.insert(notes).values({ content, important, userId: user.id });
 };
 
-export const toggleImportance = (id: number) => {
-  const note = notes.find((note) => note.id === id);
+export const toggleImportance = async (id: number) => {
+  const note = await getNoteById(id);
   if (note) {
-    note.important = !note.important;
+    await db
+      .update(notes)
+      .set({ important: not(notes.important) })
+      .where(eq(notes.id, id));
   }
 };
