@@ -3,6 +3,7 @@ import { db } from "@/db";
 import { not } from "drizzle-orm";
 import { sql } from "drizzle-orm";
 import { notes } from "@/db/schema";
+import { getCurrentUser } from "./session";
 
 export const getNotes = async (importantOnly: boolean) => {
   if (importantOnly) {
@@ -19,13 +20,11 @@ export const getNoteById = async (id: number) => {
   });
 };
 
-export const addNote = async (
-  content: string,
-  important: boolean,
-) => {
-  const user = await db.query.users.findFirst({
-    orderBy: sql`RANDOM()`,
-  });
+export const addNote = async (content: string, important: boolean) => {
+  const user = await getCurrentUser();
+  if (!user) {
+    throw new Error("Not logged in");
+  }
 
   await db.insert(notes).values({ content, important, userId: user.id });
 };
