@@ -16,7 +16,7 @@ const Notes = async ({
   return (
     <div>
       <h2>Notes</h2>
-      <div>
+      <div className="max-w-2xl mx-auto p-6 m-4">
         <Link href={showImportant ? "/notes" : "/notes?important=true"}>
           {showImportant ? "show all" : "show important only"}
         </Link>
