@@ -1,7 +1,12 @@
+"use client";
+
 import { createNewBlog } from "@/app/actions/blogs";
-const newBlog = () => {
+import { useActionState } from "react";
+
+const NewBlog = () => {
+  const [state, formAction] = useActionState(createNewBlog, { error: "" });
   return (
-    <form style={formStyles} action={createNewBlog}>
+    <form style={formStyles} action={formAction}>
       <label>
         Title: <input type="text" name="title" />
       </label>
@@ -14,6 +19,7 @@ const newBlog = () => {
       <button type="submit" style={buttonStyle}>
         Submit
       </button>
+      {state.error && <p style={{ color: "red" }}>{state.error}</p>}
     </form>
   );
 };
@@ -29,4 +35,4 @@ const buttonStyle: React.CSSProperties = {
   width: "100px",
 };
 
-export default newBlog;
+export default NewBlog;
