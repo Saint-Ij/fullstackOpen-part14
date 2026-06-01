@@ -1,6 +1,5 @@
 "use server";
 
-import { redirect } from "next/navigation";
 import bcrypt from "bcryptjs";
 import { eq } from "drizzle-orm";
 import { db } from "../db";
@@ -13,13 +12,20 @@ type userFormError = {
 
 export type userFormState = {
   errors: userFormError;
-  values: { username: string; password: string; cpassword: string, name: string };
+  values: {
+    username: string;
+    password: string;
+    cpassword: string;
+    name: string;
+  };
+  success: boolean;
 };
 
 export const registerUser = async (
   prevState: {
     errors: userFormError;
     values: { username: string; password: string; cpassword: string };
+    success: boolean;
   },
   formData: FormData
 ): Promise<userFormState> => {
@@ -50,12 +56,19 @@ export const registerUser = async (
   }
 
   if (Object.keys(errors).length > 0) {
-    return { errors, values: { username, password, cpassword, name } };
+    return {
+      errors,
+      values: { username, password, cpassword, name },
+      success: false,
+    };
   }
 
   const passwordHash = await bcrypt.hash(password, 10);
 
   await db.insert(users).values({ username, name, passwordHash });
-
-  redirect("/login");
+  return {
+    errors,
+    values: { username, password, cpassword, name },
+    success: true,
+  };
 };

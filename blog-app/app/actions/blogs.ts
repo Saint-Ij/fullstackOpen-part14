@@ -12,14 +12,16 @@ type FormError = {
   url?: string;
 };
 export type FormState = {
-  errors: FormError,
-  values: {title: string, url: string, author: string}
-}
+  errors: FormError;
+  values: { title: string; url: string; author: string };
+  success: boolean;
+};
 
 export const createNewBlog = async (
   prevState: {
     errors: FormError;
     values: { author: string; title: string; url: string };
+    success: boolean;
   },
   formData: FormData
 ): Promise<FormState> => {
@@ -32,7 +34,7 @@ export const createNewBlog = async (
   const author = formData.get("author") as string;
   const url = formData.get("url") as string;
 
-  const errors: Record<string, string> = {};
+  const errors: FormError = {};
 
   if (!title || title.length < 5) {
     errors.title = "title required and must be 5 chars long";
@@ -47,12 +49,12 @@ export const createNewBlog = async (
   }
 
   if (Object.keys(errors).length > 0) {
-    return { errors, values: { title, author, url } };
+    return { errors, values: { title, author, url }, success: false };
   }
 
   await addBlog(title, author, url);
   revalidatePath("/blogs");
-  redirect("/blogs");
+  return { errors, values: { title, author, url }, success: true };
 };
 
 export const addBlogLikes = async (formData: FormData) => {
