@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import { eq } from "drizzle-orm";
 import { db } from "../db";
 import { users } from "../db/schema";
+import { revalidatePath } from "next/cache";
 
 type userFormError = {
   username?: string;
@@ -66,6 +67,7 @@ export const registerUser = async (
   const passwordHash = await bcrypt.hash(password, 10);
 
   await db.insert(users).values({ username, name, passwordHash });
+  revalidatePath("/users")
   return {
     errors,
     values: { username, password, cpassword, name },
