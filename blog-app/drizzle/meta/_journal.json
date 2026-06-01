@@ -8,6 +8,13 @@
       "when": 1779359822836,
       "tag": "0000_romantic_madame_masque",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1780243111843,
+      "tag": "0001_long_tarantula",
+      "breakpoints": true
     }
   ]
 }

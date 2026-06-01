@@ -1,11 +1,16 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { addBlog } from "../services/blogs";
 import { addLikes } from "../services/blogs";
 
 export const createNewBlog = async (formData: FormData) => {
+  const session = await auth();
+  if (!session) {
+    redirect("/login");
+  }
   const title = formData.get("title") as string;
   const author = formData.get("author") as string;
   const url = formData.get("url") as string;

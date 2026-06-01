@@ -7,13 +7,16 @@ export const blogs = pgTable("blogs", {
   url: text("url"),
   author: text("author").notNull(),
   likes: integer("likes").notNull().default(0),
-  userId: integer("user_id").notNull().references(() => users.id),
+  userId: integer("user_id")
+    .notNull()
+    .references(() => users.id),
 });
 
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
   username: text("username").notNull().unique(),
+  passwordHash: text("password_hash").notNull().default(""),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
