@@ -7,7 +7,7 @@ import { users } from "../db/schema";
 import { addToReadingList } from "../services/reading_list";
 import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
-
+import { redirect } from "next/navigation";
 type userFormError = {
   username?: string;
   password?: string;
@@ -90,9 +90,11 @@ export const generateToken = async () => {
 };
 
 export const addBlog = async (formData: FormData) => {
+  const session = await auth();
+  if (!session) redirect("/login");
   const blogId = Number(formData.get("blogId"));
-  const userId = Number(formData.get("userId"));
-  await addToReadingList(userId, blogId);
+  const userId = session.user?.id;
+  await addToReadingList(Number(userId), blogId);
   revalidatePath("/me");
   revalidatePath("/blogs");
 };

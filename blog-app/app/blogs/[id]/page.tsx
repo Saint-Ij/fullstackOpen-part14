@@ -10,7 +10,7 @@ import { auth } from "@/auth";
 const BlogInReadingList = async (blogId: number): Promise<boolean> => {
   const session = await auth();
 
-  if (!session) return false;
+  if (!session) return true;
 
   const userId = Number(session.user?.id);
   const readingList = await getReadingList(userId);
@@ -22,8 +22,6 @@ const BlogInReadingList = async (blogId: number): Promise<boolean> => {
 
 const Blog = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
-  const session = await auth();
-  const userId = Number(session?.user?.id);
 
   let blog;
 
@@ -59,7 +57,6 @@ const Blog = async ({ params }: { params: Promise<{ id: string }> }) => {
         <div className="flex flex-col items-center gap-3">
           {!inList && (
             <form action={addBlog}>
-              <input type="hidden" name="userId" value={userId} />
               <input type="hidden" name="blogId" value={blog.id} />
               <button
                 type="submit"
