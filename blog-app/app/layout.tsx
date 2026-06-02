@@ -2,6 +2,7 @@ import NavBar from "./components/NavBar";
 import AuthSessionProvider from "./components/SessionProvider";
 import { NotificationProvider } from "./components/NotificationContext";
 import Notification from "./components/Notification";
+import "./globals.css"
 
 export default function RootLayout({
   children,
@@ -10,7 +11,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className="min-h-screen bg-mist-200">
         <AuthSessionProvider>
           <NotificationProvider>
             <Notification />
