@@ -3,7 +3,7 @@
 import bcrypt from "bcryptjs";
 import { eq } from "drizzle-orm";
 import { db } from "../db";
-import { users } from "../db/schema";
+import { readingList, users } from "../db/schema";
 import { addToReadingList } from "../services/reading_list";
 import { getCurrentUser } from "../services/session";
 import { revalidatePath } from "next/cache";
@@ -91,11 +91,17 @@ export const generateToken = async () => {
 
 export const addBlog = async (formData: FormData) => {
   const user = await getCurrentUser();
-  if (!user) redirect("login");
+  if (!user) redirect("/login");
   const blogId = Number(formData.get("blogId"));
   const userId = user?.id;
-  console.log(userId, "userID");
   await addToReadingList(Number(userId), blogId);
   revalidatePath("/me");
   revalidatePath("/blogs");
+};
+
+export const markRead = async (formData: FormData) => {
+  const user = await getCurrentUser();
+  if (!user) redirect("/login");
+  const blogId = Number(formData.get("blogId"));
+  await db.update(readingList).set({read: true}).where(eq(readingList.id, blogId))
 };
