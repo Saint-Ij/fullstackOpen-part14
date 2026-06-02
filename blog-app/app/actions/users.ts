@@ -89,7 +89,9 @@ export const generateToken = async () => {
   revalidatePath("/me");
 };
 
-export const addBlog = async (userId: number, blogId: number) => {
+export const addBlog = async (formData: FormData) => {
+  const blogId = Number(formData.get("blogId"));
+  const userId = Number(formData.get("userId"));
   await addToReadingList(userId, blogId);
   revalidatePath("/me");
   revalidatePath("/blogs");
