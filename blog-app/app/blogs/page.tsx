@@ -24,46 +24,69 @@ export const demoBlogs = [
     likes: 8,
   },
 ];
+
 const Blogs = async ({
   searchParams,
 }: {
   searchParams: Promise<{ filter?: string }>;
 }) => {
   let blogs;
+
   try {
     blogs = await getBlogs();
   } catch {
     blogs = demoBlogs;
   }
+
   const { filter } = await searchParams;
+
   const sortedBlogs = [...blogs].sort((a, b) => b.likes - a.likes);
+
   const filteredBlogs = filter
-    ? sortedBlogs.filter((blog) => blog.title.includes(filter))
+    ? sortedBlogs.filter((blog) =>
+        blog.title.toLowerCase().includes(filter.toLowerCase())
+      )
     : sortedBlogs;
 
   return (
-    <div className="m-3">
-      <form action={"/blogs"} className="m-2 p-2">
-        <span className="text-2xl font-bold">Search: </span>{" "}
-        <input type="text" name="filter" className="border-2 rounded-sm p-1" />
-        <button type="submit" className="bg-blue-500 rounded p-2 ml-4 m-2">
+    <div className="m-4">
+      <form action="/blogs" className="mb-6 flex flex-wrap items-center gap-3">
+        <span className="text-lg font-semibold">Search</span>
+
+        <input
+          type="text"
+          name="filter"
+          className="rounded border px-3 py-2 outline-none focus:border-blue-500"
+        />
+
+        <button
+          type="submit"
+          className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+        >
           Search
         </button>
       </form>
-      <div className=" grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3">
-      {filteredBlogs.map((blog) => (
-        <div
-          key={blog.id}
-          className="border-slate-800 rounded-2xl border-2 p-3"
-        >
-          <Link href={`blogs/${blog.id}`}>
-            <p className="text-blue-400 hover:scale-101 transition-all font-semibold">Title: {blog.title}</p>
-          </Link>
-          <p>author: {blog.author}</p>
-          <p>url: {blog.url}</p>
-          <p>likes: {blog.likes}</p>
-        </div>
-      ))}
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+        {filteredBlogs.map((blog) => (
+          <div
+            key={blog.id}
+            className="rounded-xl border bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+          >
+            <Link href={`blogs/${blog.id}`}>
+              <p className="mb-2 font-semibold text-blue-600 hover:text-blue-800">
+                {blog.title}
+              </p>
+            </Link>
+
+            <p className="text-sm text-gray-600">Author: {blog.author}</p>
+            <p className="text-sm text-gray-600 break-all">URL: {blog.url}</p>
+
+            <p className="mt-2 text-sm font-medium text-gray-800">
+              Likes: {blog.likes}
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   );

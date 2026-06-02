@@ -1,6 +1,13 @@
-import "./globals.css"
+import "./globals.css";
+
 const Home = () => {
-  return <h1 className="text-green-400 text-6xl m-3 p-2 font-bold">Blog App</h1>;
+  return (
+    <div className="flex min-h-[70vh] items-center justify-center">
+      <h1 className="text-5xl font-bold text-green-500 tracking-tight">
+        Blog App
+      </h1>
+    </div>
+  );
 };
 
 export default Home;
