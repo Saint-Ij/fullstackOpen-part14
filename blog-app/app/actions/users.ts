@@ -67,10 +67,18 @@ export const registerUser = async (
   const passwordHash = await bcrypt.hash(password, 10);
 
   await db.insert(users).values({ username, name, passwordHash });
-  revalidatePath("/users")
+  revalidatePath("/users");
   return {
     errors,
     values: { username, password, cpassword, name },
     success: true,
   };
+};
+
+export const generateToken = async () => {
+  const token = crypto.randomUUID();
+  await db.update(users).set({
+    token,
+  });
+  revalidatePath("/me");
 };

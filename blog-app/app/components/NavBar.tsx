@@ -26,6 +26,7 @@ const NavBar = () => {
             Create Blog
           </Link>
           <em>{session.user?.name} logged in</em>{" "}
+          <Link href="/me">me</Link>
           <button
             onClick={() => signOut()}
             className="hover:scale-120 transition-all"
