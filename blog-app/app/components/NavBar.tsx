@@ -21,7 +21,7 @@ const NavBar = () => {
       </div>
 
       {session ? (
-        <div>
+        <div className="flex gap-4 m-2">
           <Link href="/blogs/new" className="hover:scale-120 transition-all">
             Create Blog
           </Link>
