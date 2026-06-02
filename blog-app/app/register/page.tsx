@@ -19,70 +19,80 @@ export default function RegisterPage() {
     },
     success: false,
   };
+
   const [state, formAction] = useActionState(registerUser, initialState);
 
   useEffect(() => {
     if (state.success) {
-      showNotification("user created");
+      showNotification("User created");
       router.push("/users");
     }
   }, [state, showNotification, router]);
+
   return (
-    <div>
-      <h2>Register</h2>
-      <form action={formAction}>
-        <div>
-          <label>
-            Username
+    <div className="flex min-h-screen items-center justify-center bg-gray-50">
+      <div className="w-full max-w-md rounded-xl bg-white p-6 shadow">
+        <h2 className="mb-4 text-xl font-semibold">Register</h2>
+
+        <form action={formAction} className="space-y-4">
+          <div>
             <input
               type="text"
               name="username"
-              required
+              placeholder="Username"
               defaultValue={state.values.username}
+              className="w-full rounded border p-2 outline-none focus:border-blue-500"
             />
-          </label>
-          {state.errors.username && (
-            <p style={{ color: "red" }}>{state.errors.username}</p>
-          )}
-        </div>
-        <div>
-          <label>
-            Name
+            {state.errors.username && (
+              <p className="mt-1 text-sm text-red-600">
+                {state.errors.username}
+              </p>
+            )}
+          </div>
+
+          <div>
             <input
               type="text"
               name="name"
-              required
+              placeholder="Full name"
               defaultValue={state.values.name}
+              className="w-full rounded border p-2 outline-none focus:border-blue-500"
             />
-          </label>
-        </div>
-        <div>
-          <label>
-            Password
+          </div>
+
+          <div>
             <input
               type="password"
               name="password"
-              required
+              placeholder="Password"
               defaultValue={state.values.password}
+              className="w-full rounded border p-2 outline-none focus:border-blue-500"
             />
-          </label>
-        </div>
-        <div>
-          <label>
-            Password
+          </div>
+
+          <div>
             <input
               type="password"
               name="cpassword"
-              required
+              placeholder="Confirm password"
               defaultValue={state.values.cpassword}
+              className="w-full rounded border p-2 outline-none focus:border-blue-500"
             />
-          </label>
-          {state.errors.password && (
-            <p style={{ color: "red" }}>{state.errors.password}</p>
-          )}
-        </div>
-        <button type="submit">Register</button>
-      </form>
+            {state.errors.password && (
+              <p className="mt-1 text-sm text-red-600">
+                {state.errors.password}
+              </p>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            className="w-full rounded bg-blue-600 p-2 text-white hover:bg-blue-700"
+          >
+            Register
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

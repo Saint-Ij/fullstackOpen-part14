@@ -23,47 +23,67 @@ const NewBlog = () => {
 
   useEffect(() => {
     if (state.success) {
-      showNotification("blog created");
+      showNotification("Blog created");
       router.push("/blogs");
     }
   }, [state, showNotification, router]);
-  
+
   return (
-    <form style={formStyles} action={formAction}>
-      <label>
-        Title:{" "}
-        <input type="text" name="title" defaultValue={state.values.title} />
-      </label>
-      {state.errors.title && (
-        <p style={{ color: "red" }}>{state.errors.title}</p>
-      )}
-      <label>
-        Author:{" "}
-        <input type="text" name="author" defaultValue={state.values.author} />
-      </label>
-      {state.errors.author && (
-        <p style={{ color: "red" }}>{state.errors.author}</p>
-      )}
-      <label>
-        Url: <input type="text" name="url" defaultValue={state.values.url} />
-      </label>
-      {state.errors.url && <p style={{ color: "red" }}>{state.errors.url}</p>}
-      <button type="submit" style={buttonStyle}>
-        Submit
-      </button>
-    </form>
+    <div className="flex min-h-screen items-center justify-center bg-gray-50">
+      <form
+        action={formAction}
+        className="w-full max-w-md space-y-4 rounded-xl bg-white p-6 shadow"
+      >
+        <h2 className="text-xl font-semibold">New Blog</h2>
+
+        <div>
+          <input
+            type="text"
+            name="title"
+            placeholder="Title"
+            defaultValue={state.values.title}
+            className="w-full rounded border p-2 focus:border-blue-500 outline-none"
+          />
+          {state.errors.title && (
+            <p className="mt-1 text-sm text-red-600">{state.errors.title}</p>
+          )}
+        </div>
+
+        <div>
+          <input
+            type="text"
+            name="author"
+            placeholder="Author"
+            defaultValue={state.values.author}
+            className="w-full rounded border p-2 focus:border-blue-500 outline-none"
+          />
+          {state.errors.author && (
+            <p className="mt-1 text-sm text-red-600">{state.errors.author}</p>
+          )}
+        </div>
+
+        <div>
+          <input
+            type="text"
+            name="url"
+            placeholder="URL"
+            defaultValue={state.values.url}
+            className="w-full rounded border p-2 focus:border-blue-500 outline-none"
+          />
+          {state.errors.url && (
+            <p className="mt-1 text-sm text-red-600">{state.errors.url}</p>
+          )}
+        </div>
+
+        <button
+          type="submit"
+          className="w-full rounded bg-blue-600 p-2 text-white hover:bg-blue-700"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
   );
-};
-
-const formStyles: React.CSSProperties = {
-  margin: "5px",
-  display: "flex",
-  gap: "7px",
-  flexDirection: "column",
-};
-
-const buttonStyle: React.CSSProperties = {
-  width: "100px",
 };
 
 export default NewBlog;
