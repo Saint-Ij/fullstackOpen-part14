@@ -103,5 +103,9 @@ export const markRead = async (formData: FormData) => {
   const user = await getCurrentUser();
   if (!user) redirect("/login");
   const blogId = Number(formData.get("blogId"));
-  await db.update(readingList).set({read: true}).where(eq(readingList.id, blogId))
+  await db
+    .update(readingList)
+    .set({ read: true })
+    .where(eq(readingList.id, blogId));
+  revalidatePath("/me");
 };
