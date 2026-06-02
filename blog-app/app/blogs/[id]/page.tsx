@@ -1,19 +1,19 @@
 import { addBlogLikes } from "@/app/actions/blogs";
 import { getBlogById } from "@/app/services/blogs";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { demoBlogs } from "../page";
 import { getReadingList } from "@/app/services/users";
 import { addBlog } from "@/app/actions/users";
-import { auth } from "@/auth";
+import { getCurrentUser } from "@/app/services/session";
 
 const BlogInReadingList = async (blogId: number): Promise<boolean> => {
-  const session = await auth();
+  const user = await getCurrentUser();
+  if (!user) {
+    redirect("/login");
+  }
 
-  if (!session) return true;
-
-  const userId = Number(session.user?.id);
-  const readingList = await getReadingList(userId);
+  const readingList = await getReadingList(user.id);
 
   return (
     readingList?.readings?.some((reading) => reading.blogId === blogId) ?? false

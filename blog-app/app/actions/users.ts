@@ -5,9 +5,10 @@ import { eq } from "drizzle-orm";
 import { db } from "../db";
 import { users } from "../db/schema";
 import { addToReadingList } from "../services/reading_list";
-import { auth } from "@/auth";
+import { getCurrentUser } from "../services/session";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+
 type userFormError = {
   username?: string;
   password?: string;
@@ -79,21 +80,21 @@ export const registerUser = async (
 
 export const generateToken = async () => {
   const token = crypto.randomUUID();
-  const session = await auth();
-  const userId = Number(session?.user?.id);
-
-  if (!userId) {
-    throw new Error("Invalid user id");
+  const user = await getCurrentUser();
+  if (!user) {
+    redirect("login");
   }
-  await db.update(users).set({ token }).where(eq(users.id, userId));
+
+  await db.update(users).set({ token }).where(eq(users.id, user.id));
   revalidatePath("/me");
 };
 
 export const addBlog = async (formData: FormData) => {
-  const session = await auth();
-  if (!session) redirect("/login");
+  const user = await getCurrentUser();
+  if (!user) redirect("login");
   const blogId = Number(formData.get("blogId"));
-  const userId = session.user?.id;
+  const userId = user?.id;
+  console.log(userId, "userID");
   await addToReadingList(Number(userId), blogId);
   revalidatePath("/me");
   revalidatePath("/blogs");
