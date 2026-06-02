@@ -17,7 +17,7 @@ const User = async ({ params }: { params: Promise<{ username: string }> }) => {
       <h3 className="mb-3 text-lg font-semibold">Notes</h3>
 
       <div className="space-y-4">
-        {user.blogs.map((blog) => (
+        {user.createdBlogs.map((blog) => (
           <div
             key={blog.id}
             className="rounded border p-4 shadow-sm hover:bg-gray-50 transition"

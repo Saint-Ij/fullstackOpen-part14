@@ -9,6 +9,6 @@ export const getUsers = async () => {
 export const getUserWithNotes = async (username: string) => {
   return db.query.users.findFirst({
     where: eq(users.username, username),
-    with: { blogs: true },
+    with: { createdBlogs: true },
   });
 };
