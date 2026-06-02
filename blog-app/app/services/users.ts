@@ -12,3 +12,14 @@ export const getUserWithNotes = async (username: string) => {
     with: { createdBlogs: true },
   });
 };
+
+export const getReadingList = async (id: number) => {
+  return db.query.users.findFirst({
+    where: eq(users.id, id),
+    with: {
+      readings: {
+        with: { blog: true },
+      },
+    },
+  });
+};

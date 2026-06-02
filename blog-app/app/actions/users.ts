@@ -4,6 +4,8 @@ import bcrypt from "bcryptjs";
 import { eq } from "drizzle-orm";
 import { db } from "../db";
 import { users } from "../db/schema";
+import { addToReadingList } from "../services/reading_list";
+import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
 
 type userFormError = {
@@ -77,8 +79,18 @@ export const registerUser = async (
 
 export const generateToken = async () => {
   const token = crypto.randomUUID();
-  await db.update(users).set({
-    token,
-  });
+  const session = await auth();
+  const userId = Number(session?.user?.id);
+
+  if (!userId) {
+    throw new Error("Invalid user id");
+  }
+  await db.update(users).set({ token }).where(eq(users.id, userId));
   revalidatePath("/me");
+};
+
+export const addBlog = async (userId: number, blogId: number) => {
+  await addToReadingList(userId, blogId);
+  revalidatePath("/me");
+  revalidatePath("/blogs");
 };

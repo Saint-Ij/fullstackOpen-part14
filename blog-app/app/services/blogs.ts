@@ -12,7 +12,13 @@ export const addBlog = async (title: string, author: string, url: string) => {
   if (!user) {
     throw new Error("No user found");
   }
-  await db.insert(blogs).values({ title, author, url, userId: user?.id });
+  const result = await db
+    .insert(blogs)
+    .values({ title, author, url, userId: user?.id })
+    .returning({
+      id: blogs.id,
+    });
+  return { userId: user.id, blogId: result[0].id };
 };
 
 export const getBlogById = async (id: number) => {

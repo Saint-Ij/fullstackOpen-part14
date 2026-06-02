@@ -5,6 +5,7 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { addBlog } from "../services/blogs";
 import { addLikes } from "../services/blogs";
+import { addToReadingList } from "../services/reading_list";
 
 type FormError = {
   title?: string;
@@ -52,8 +53,10 @@ export const createNewBlog = async (
     return { errors, values: { title, author, url }, success: false };
   }
 
-  await addBlog(title, author, url);
+  const { userId, blogId } = await addBlog(title, author, url);
+  await addToReadingList(userId, blogId);
   revalidatePath("/blogs");
+  revalidatePath("/me");
   return { errors, values: { title, author, url }, success: true };
 };
 
