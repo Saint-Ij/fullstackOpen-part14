@@ -31,6 +31,8 @@ const Me = async () => {
     else unreadBlogs.push(blog);
   });
 
+  const isEmpty = readBlogs.length === 0 && unreadBlogs.length === 0;
+
   return (
     <div
       data-testid="user-profile"
@@ -58,59 +60,73 @@ const Me = async () => {
         <div data-testid="reading-list-section">
           <h2 className="text-xl font-semibold mb-4">Reading List</h2>
 
-          {/* Unread */}
-          <div className="mb-6" data-testid="unread-section">
-            <p className="text-sm font-medium text-gray-600 mb-2">
-              Unread ({unreadBlogs.length})
+          {isEmpty ? (
+            <p
+              data-testid="empty-reading-list"
+              className="text-sm text-gray-500"
+            >
+              No reading list yet
             </p>
+          ) : (
+            <>
+              {/* Unread */}
+              <div className="mb-6" data-testid="unread-section">
+                <p className="text-sm font-medium text-gray-600 mb-2">
+                  Unread ({unreadBlogs.length})
+                </p>
 
-            {unreadBlogs.length === 0 && (
-              <p
-                data-testid="no-unread-blogs"
-                className="text-sm text-gray-500"
-              >
-                No unread blogs
-              </p>
-            )}
+                {unreadBlogs.length === 0 && (
+                  <p
+                    data-testid="no-unread-blogs"
+                    className="text-sm text-gray-500"
+                  >
+                    No unread blogs
+                  </p>
+                )}
 
-            <div className="space-y-2">
-              {unreadBlogs.map((blog) => (
-                <div
-                  key={blog.id}
-                  className="flex items-center justify-between rounded-lg border p-3 hover:bg-gray-50"
-                >
-                  <p className="font-medium">{blog.title}</p>
-
-                  <form action={markRead}>
-                    <input type="hidden" name="blogId" value={blog.id} />
-
-                    <button
-                      type="submit"
-                      data-testid={`mark-read-${blog.id}`}
-                      className="rounded bg-green-600 px-3 py-1 text-sm text-white hover:bg-green-700"
+                <div className="space-y-2">
+                  {unreadBlogs.map((blog) => (
+                    <div
+                      key={blog.id}
+                      className="flex items-center justify-between rounded-lg border p-3 hover:bg-gray-50"
                     >
-                      Mark as read
-                    </button>
-                  </form>
-                </div>
-              ))}
-            </div>
-          </div>
+                      <p className="font-medium">{blog.title}</p>
 
-          {/* Read */}
-          <div>
-            <p className="text-sm font-medium text-gray-600 mb-2">
-              Read ({readBlogs.length})
-            </p>
+                      <form action={markRead}>
+                        <input type="hidden" name="blogId" value={blog.id} />
 
-            <div className="space-y-2">
-              {readBlogs.map((blog) => (
-                <div key={blog.id} className="rounded-lg border p-3 bg-gray-50">
-                  <p className="font-medium">{blog.title}</p>
+                        <button
+                          type="submit"
+                          data-testid={`mark-read-${blog.id}`}
+                          className="rounded bg-green-600 px-3 py-1 text-sm text-white hover:bg-green-700"
+                        >
+                          Mark as read
+                        </button>
+                      </form>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
+              </div>
+
+              {/* Read */}
+              <div>
+                <p className="text-sm font-medium text-gray-600 mb-2">
+                  Read ({readBlogs.length})
+                </p>
+
+                <div className="space-y-2">
+                  {readBlogs.map((blog) => (
+                    <div
+                      key={blog.id}
+                      className="rounded-lg border p-3 bg-gray-50"
+                    >
+                      <p className="font-medium">{blog.title}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
         </div>
 
         <div className="border-t" />

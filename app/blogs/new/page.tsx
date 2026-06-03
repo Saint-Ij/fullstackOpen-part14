@@ -80,7 +80,7 @@ const NewBlog = () => {
           data-testid="create-blog-button"
           className="w-full rounded bg-blue-600 p-2 text-white hover:bg-blue-700"
         >
-          Submit
+          Create
         </button>
       </form>
     </div>

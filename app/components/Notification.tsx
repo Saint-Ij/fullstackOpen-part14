@@ -14,6 +14,7 @@ export default function Notification() {
           ? `p-2 m-2 rounded bg-green-600 text-white`
           : `p-2 m-2 rounded bg-red-500 text-white`
       }
+      data-testid="notification"
     >
       {message}
     </div>

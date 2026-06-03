@@ -25,7 +25,7 @@ export default function RegisterPage() {
   useEffect(() => {
     if (state.success) {
       showNotification("User created");
-      router.push("/users");
+      router.push("/login");
     }
   }, [state, showNotification, router]);
 

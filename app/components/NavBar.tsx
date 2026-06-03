@@ -14,8 +14,8 @@ const NavBar = () => {
     >
       <div className="flex gap-4 m-2">
         <Link href="/">Home</Link>
-        <Link href="/blogs">Blogs</Link>
-        <Link href="/users">Users</Link>
+        <Link href="/blogs">blogs</Link>
+        <Link href="/users">users</Link>
       </div>
 
       {session ? (
