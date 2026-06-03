@@ -53,12 +53,6 @@ jobs:
       - name: Run database migrations
         run: npx drizzle-kit push
 
-      - name: Start dev server
-        run: npm run dev &
-
-      - name: Wait for server
-        run: npx wait-on http://localhost:3000
-
       - name: Run Playwright tests
         run: npx playwright test
 
