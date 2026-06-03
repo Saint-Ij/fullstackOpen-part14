@@ -23,7 +23,7 @@ const Me = async () => {
 
   readingList?.readings.forEach((reading) => {
     const blog = {
-      id: reading.blog.id,
+      id: reading.id,
       title: reading.blog.title,
     };
 
