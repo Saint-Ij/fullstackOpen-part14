@@ -1,0 +1,10 @@
+{"version":8,"type":"context-options","origin":"testRunner","browserName":"","playwrightVersion":"1.60.0","options":{},"platform":"linux","wallTime":1780473596816,"monotonicTime":103951.223,"sdkLanguage":"javascript"}
+{"type":"before","callId":"hook@1","stepId":"hook@1","startTime":104012.842,"class":"Test","method":"hook","title":"Before Hooks","params":{},"stack":[]}
+{"type":"before","callId":"hook@2","stepId":"hook@2","parentId":"hook@1","startTime":104015.045,"class":"Test","method":"hook","title":"beforeEach hook","params":{},"stack":[{"file":"/home/hackerprince/fullstackOpen-part14/blog-app/tests/blog-app.spec.ts","line":5,"column":8}]}
+{"type":"after","callId":"hook@2","endTime":106418.892,"annotations":[],"error":{"name":"","message":"\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m","stack":"\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n    at /home/hackerprince/fullstackOpen-part14/blog-app/tests/blog-app.spec.ts:5:8"}}
+{"type":"after","callId":"hook@1","endTime":106419.679,"annotations":[],"error":{"name":"","message":"\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m","stack":"\u001b[31mTest timeout of 30000ms exceeded while running \"beforeEach\" hook.\u001b[39m\n    at /home/hackerprince/fullstackOpen-part14/blog-app/tests/blog-app.spec.ts:5:8"}}
+{"type":"before","callId":"hook@32","stepId":"hook@32","startTime":106421.023,"class":"Test","method":"hook","title":"After Hooks","params":{},"stack":[]}
+{"type":"after","callId":"hook@32","endTime":106450.338,"annotations":[]}
+{"type":"before","callId":"hook@62","stepId":"hook@62","startTime":106450.904,"class":"Test","method":"hook","title":"Worker Cleanup","params":{},"stack":[]}
+{"type":"after","callId":"hook@62","endTime":106457.402,"annotations":[]}
+{"type":"error","message":"Error: Channel closed","stack":[]}

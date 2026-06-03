@@ -36,50 +36,60 @@ export default function RegisterPage() {
 
         <form action={formAction} className="space-y-4">
           <div>
+            <label htmlFor="username">Username</label>
             <input
+              id="username"
               type="text"
               name="username"
-              placeholder="Username"
               defaultValue={state.values.username}
-              className="w-full rounded border p-2 outline-none focus:border-blue-500"
+              className="w-full rounded border p-2"
             />
             {state.errors.username && (
-              <p className="mt-1 text-sm text-red-600">
+              <p
+                data-testid="username-error"
+                className="mt-1 text-sm text-red-600"
+              >
                 {state.errors.username}
               </p>
             )}
           </div>
 
           <div>
+            <label htmlFor="name">Name</label>
             <input
+              id="name"
               type="text"
               name="name"
-              placeholder="Full name"
               defaultValue={state.values.name}
-              className="w-full rounded border p-2 outline-none focus:border-blue-500"
+              className="w-full rounded border p-2"
             />
           </div>
 
           <div>
+            <label htmlFor="password">Password</label>
             <input
+              id="password"
               type="password"
               name="password"
-              placeholder="Password"
               defaultValue={state.values.password}
-              className="w-full rounded border p-2 outline-none focus:border-blue-500"
+              className="w-full rounded border p-2"
             />
           </div>
 
           <div>
+            <label htmlFor="cpassword">Confirm Password</label>
             <input
+              id="cpassword"
               type="password"
               name="cpassword"
-              placeholder="Confirm password"
               defaultValue={state.values.cpassword}
-              className="w-full rounded border p-2 outline-none focus:border-blue-500"
+              className="w-full rounded border p-2"
             />
             {state.errors.password && (
-              <p className="mt-1 text-sm text-red-600">
+              <p
+                data-testid="passwordConfirm-error"
+                className="mt-1 text-sm text-red-600"
+              >
                 {state.errors.password}
               </p>
             )}
@@ -87,7 +97,8 @@ export default function RegisterPage() {
 
           <button
             type="submit"
-            className="w-full rounded bg-blue-600 p-2 text-white hover:bg-blue-700"
+            data-testid="register-button"
+            className="w-full rounded bg-blue-600 p-2 text-white"
           >
             Register
           </button>

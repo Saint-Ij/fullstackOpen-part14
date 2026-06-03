@@ -37,46 +37,47 @@ const NewBlog = () => {
         <h2 className="text-xl font-semibold">New Blog</h2>
 
         <div>
+          <label htmlFor="title" className="mb-1 block text-sm font-medium">
+            Title
+          </label>
           <input
+            id="title"
             type="text"
             name="title"
-            placeholder="Title"
             defaultValue={state.values.title}
             className="w-full rounded border p-2 focus:border-blue-500 outline-none"
           />
-          {state.errors.title && (
-            <p className="mt-1 text-sm text-red-600">{state.errors.title}</p>
-          )}
         </div>
 
         <div>
+          <label htmlFor="author" className="mb-1 block text-sm font-medium">
+            Author
+          </label>
           <input
+            id="author"
             type="text"
             name="author"
-            placeholder="Author"
             defaultValue={state.values.author}
             className="w-full rounded border p-2 focus:border-blue-500 outline-none"
           />
-          {state.errors.author && (
-            <p className="mt-1 text-sm text-red-600">{state.errors.author}</p>
-          )}
         </div>
 
         <div>
+          <label htmlFor="url" className="mb-1 block text-sm font-medium">
+            URL
+          </label>
           <input
+            id="url"
             type="text"
             name="url"
-            placeholder="URL"
             defaultValue={state.values.url}
             className="w-full rounded border p-2 focus:border-blue-500 outline-none"
           />
-          {state.errors.url && (
-            <p className="mt-1 text-sm text-red-600">{state.errors.url}</p>
-          )}
         </div>
 
         <button
           type="submit"
+          data-testid="create-blog-button"
           className="w-full rounded bg-blue-600 p-2 text-white hover:bg-blue-700"
         >
           Submit

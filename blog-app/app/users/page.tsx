@@ -8,10 +8,11 @@ const Users = async () => {
     <div className="mx-auto max-w-md p-6">
       <h2 className="mb-4 text-xl font-semibold">Users</h2>
 
-      <ul className="space-y-2">
+      <ul data-testid="users-list" className="space-y-2">
         {users.map((user) => (
           <li
             key={user.id}
+            data-testid="user-item"
             className="rounded border p-3 hover:bg-gray-50 transition"
           >
             <Link

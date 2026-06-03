@@ -9,6 +9,7 @@ import { getCurrentUser } from "@/app/services/session";
 
 const BlogInReadingList = async (blogId: number): Promise<boolean> => {
   const user = await getCurrentUser();
+
   if (!user) {
     redirect("/login");
   }
@@ -37,10 +38,15 @@ const Blog = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   return (
     <div className="flex min-h-[70vh] items-center justify-center p-6">
-      <div className="w-full max-w-xl space-y-5 rounded-xl border bg-white p-6 shadow-sm text-center">
-        <h1 className="text-2xl font-bold">{blog.title}</h1>
+      <div
+        data-testid="blog-detail"
+        className="w-full max-w-xl space-y-5 rounded-xl border bg-white p-6 shadow-sm text-center"
+      >
+        <h1 data-testid="blog-title" className="text-2xl font-bold">
+          {blog.title}
+        </h1>
 
-        <p className="text-sm text-gray-600">
+        <p data-testid="blog-author" className="text-sm text-gray-600">
           By <span className="font-semibold text-gray-900">{blog.author}</span>
         </p>
 
@@ -58,8 +64,10 @@ const Blog = async ({ params }: { params: Promise<{ id: string }> }) => {
           {!inList && (
             <form action={addBlog}>
               <input type="hidden" name="blogId" value={blog.id} />
+
               <button
                 type="submit"
+                data-testid="add-to-reading-list-button"
                 className="rounded bg-emerald-600 px-4 py-2 text-white hover:bg-emerald-700"
               >
                 Add to Reading List
@@ -69,6 +77,7 @@ const Blog = async ({ params }: { params: Promise<{ id: string }> }) => {
 
           <form action={addBlogLikes}>
             <input type="hidden" name="id" value={blog.id} />
+
             <button
               type="submit"
               className="rounded bg-black px-5 py-2 text-white hover:bg-gray-800"

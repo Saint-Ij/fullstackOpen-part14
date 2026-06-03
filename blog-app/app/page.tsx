@@ -1,13 +1,12 @@
-import "./globals.css";
+"use client";
 
-const Home = () => {
-  return (
-    <div className="flex min-h-[70vh] items-center justify-center">
-      <h1 className="text-5xl font-bold text-green-500 tracking-tight">
-        Blog App
-      </h1>
-    </div>
-  );
-};
+import "./globals.css";
+import Homepage from "./homepage.mdx";
+
+const Home = () => (
+  <div className="markdown">
+    <Homepage />
+  </div>
+);
 
 export default Home;
