@@ -1,8 +1,7 @@
 import { defineConfig } from "drizzle-kit";
 import * as dotenv from "dotenv";
 
-dotenv.config({ path: process.env.NODE_ENV === "test" ? ".env.test" : ".env.local" });
-export default defineConfig({
+dotenv.config({ path: ".env.test" });export default defineConfig({
   schema: "./app/db/schema.ts",
   out: "./drizzle",
   dialect: "postgresql",
